@@ -1,8 +1,11 @@
-import { useState } from "react";
-
-export default function SideNav({ projects, handleOnClick }) {
+export default function SideNav({
+  projects,
+  handleOnClick,
+  handleSelectProject,
+  selectedProjectId,
+}) {
   return (
-    <nav className="bg-black text-white h-screen w-1/4 mt-12 rounded-tr-xl">
+    <nav className="bg-black text-white h-screen w-1/4 rounded-tr-xl mr-6">
       <h1 className="text-3xl font-semibold text-left pt-24 pb-12 pl-12">
         YOUR PROJECTS
       </h1>
@@ -14,11 +17,14 @@ export default function SideNav({ projects, handleOnClick }) {
       </button>
       <ol className="pt-12 px-6 pb-12">
         {projects
-          .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-          .map((project, index) => (
+          .sort((a, b) => a.dueDate - b.dueDate)
+          .map((project) => (
             <li
-              key={index}
-              className="bg-stone-900 text-lg text-left text-stone-400 font-medium pl-2 pt-4 pb-4 mx-6"
+              key={project.id}
+              onClick={() => handleSelectProject(project)}
+              className={`${
+                project.id === selectedProjectId ? "bg-stone-800" : ""
+              } text-lg text-left text-stone-400 font-medium pl-2 pt-4 pb-4 mx-6 hover:bg-stone-800`}
             >
               {project.name}
             </li>

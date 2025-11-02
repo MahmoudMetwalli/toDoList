@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import SideNav from "./components/SideNav";
 import Project from "./components/Project";
 import ProjectForm from "./components/ProjectForm";
@@ -17,25 +17,40 @@ function App() {
     const formData = new FormData(event.target);
 
     const project = {
+      id: Date.now(),
       name: formData.get("projectName"),
       description: formData.get("projectDescription"),
-      dueDate: formData.get("projectDueDate"),
+      dueDate: new Date(formData.get("projectDueDate")),
+      tasks: [],
     };
     addProject(project);
+    event.target.reset();
+    setIsAddingProject(false);
   }
 
+  function startAddingProject() {
+    setIsAddingProject(true);
+  }
+
+  function handleSelectProject(project) {
+    setSelectedProject(project);
+    setIsAddingProject(false);
+  }
   return (
-    <main className="flex">
-      <SideNav projects={projects} />
-      <div className="flex-1">
+    <main className="flex mt-12">
+      <SideNav
+        projects={projects}
+        handleOnClick={startAddingProject}
+        handleSelectProject={handleSelectProject}
+        selectedProjectId={selectedProject.id}
+      />
+      <div className="flex-1 mt-24 ml-6">
         {isAddingProject ? (
-          selectedProject ? (
-            <Project project={selectedProject} />
-          ) : (
-            "Please Add Project"
-          )
-        ) : (
           <ProjectForm onSubmit={handleAddProject} />
+        ) : selectedProject ? (
+          <Project project={selectedProject} />
+        ) : (
+          "Please Add Project"
         )}
       </div>
     </main>
