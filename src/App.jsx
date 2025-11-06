@@ -42,7 +42,7 @@ function App() {
         projects={projects}
         handleOnClick={startAddingProject}
         handleSelectProject={handleSelectProject}
-        selectedProjectId={selectedProject.id}
+        selectedProjectId={selectedProject ? selectedProject.id : ""}
       />
       <div className="flex-1 mt-24 ml-6">
         {isAddingProject ? (
