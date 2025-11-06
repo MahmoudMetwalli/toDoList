@@ -44,7 +44,7 @@ function App() {
         handleSelectProject={handleSelectProject}
         selectedProjectId={selectedProject ? selectedProject.id : ""}
       />
-      <div className="flex-1 mt-24 ml-6">
+      <div className="flex-1 mt-24 ml-6 mr-64">
         {isAddingProject ? (
           <ProjectForm onSubmit={handleAddProject} />
         ) : selectedProject ? (
