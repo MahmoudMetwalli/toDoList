@@ -36,6 +36,15 @@ function App() {
     setSelectedProject(project);
     setIsAddingProject(false);
   }
+
+  function handleDeleteProject(projectId) {
+    if (selectedProject?.id === projectId) {
+      setSelectedProject(null);
+    }
+    setProjects((prevProjects) =>
+      prevProjects.filter((project) => project.id !== projectId)
+    );
+  }
   return (
     <main className="flex mt-12">
       <SideNav
@@ -48,7 +57,10 @@ function App() {
         {isAddingProject ? (
           <ProjectForm onSubmit={handleAddProject} />
         ) : selectedProject ? (
-          <Project project={selectedProject} />
+          <Project
+            project={selectedProject}
+            handleDeleteProject={handleDeleteProject}
+          />
         ) : (
           "Please Add Project"
         )}
