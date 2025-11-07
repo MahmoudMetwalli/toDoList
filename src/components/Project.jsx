@@ -1,4 +1,14 @@
-export default function Project({ project, handleDeleteProject }) {
+import { forwardRef, useImperativeHandle, useRef } from "react";
+
+const Project = forwardRef(function Project(
+  { project, handleDeleteProject, handleAddTask, handleClearTask },
+  ref
+) {
+  console.log(project);
+  const taskInputRef = useRef();
+  useImperativeHandle(ref, () => ({
+    taskInput: taskInputRef.current,
+  }));
   const formattedDate = new Date(project.dueDate).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -23,6 +33,32 @@ export default function Project({ project, handleDeleteProject }) {
       <header>
         <h3 className="text-4xl font-semibold">Tasks</h3>
       </header>
+      <div className="flex gap-4">
+        <input
+          type="text"
+          ref={taskInputRef}
+          className="bg-stone-300 outline-none my-4 pr-16"
+        />
+        <button
+          className="font-medium"
+          onClick={() => handleAddTask(project.id)}
+        >
+          Add Task
+        </button>
+      </div>
+      {project.tasks.map((task) => (
+        <div
+          className="flex justify-between items-center bg-stone-100 my-2 py-4 px-4 rounded-2xl"
+          key={task.id}
+        >
+          <p>{task.content}</p>
+          <button onClick={() => handleClearTask(project.id, task.id)}>
+            Clear
+          </button>
+        </div>
+      ))}
     </article>
   );
-}
+});
+
+export default Project;

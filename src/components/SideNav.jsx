@@ -21,7 +21,7 @@ export default function SideNav({
           .map((project) => (
             <li
               key={project.id}
-              onClick={() => handleSelectProject(project)}
+              onClick={() => handleSelectProject(project.id)}
               className={`${
                 project.id === selectedProjectId ? "bg-stone-800" : ""
               } text-lg text-left text-stone-400 font-medium pl-2 pt-4 pb-4 mx-6 hover:bg-stone-800`}
