@@ -1,8 +1,9 @@
 export default function ProjectForm({ onSubmit }) {
   const inputClass = "bg-stone-300 outline-none";
+  const labelClass = "text-stone-800 font-bold test-xl";
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
-      <div className="flex justify-end gap-2 bg-yellow-500">
+      <div className="flex justify-end gap-2">
         <button className="text-black  py-2 px-6 m-2 rounded-lg text-xl font-medium">
           Cancel
         </button>
@@ -14,32 +15,26 @@ export default function ProjectForm({ onSubmit }) {
         </button>
       </div>
       <div className="flex flex-col gap-2">
-        <label htmlFor="projectName" className="">
-          Project Name
+        <label htmlFor="projectName" className={labelClass}>
+          TITLE
         </label>
-        <input
-          type="text"
-          id="projectName"
-          name="projectName"
-          className={inputClass}
-        />
-        <label htmlFor="projectDescription" className="">
-          Project Description
+        <input type="text" name="projectName" className={inputClass} />
+        <label htmlFor="projectDescription" className={labelClass}>
+          DESCRIPTION
         </label>
-        <input
+        <textarea
           type="text"
-          id="projectDescription"
           name="projectDescription"
           className={inputClass}
         />
-        <label htmlFor="projectDueDate" className="">
-          Project Due Date
+        <label htmlFor="projectDueDate" className={labelClass}>
+          DUE DATE
         </label>
         <input
           type="date"
-          id="projectDueDate"
           name="projectDueDate"
-          className={inputClass}
+          min={new Date().toISOString().split("T")[0]}
+          className={`${inputClass} placeholder:text-black`}
         />
       </div>
     </form>
